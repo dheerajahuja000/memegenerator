@@ -1,25 +1,29 @@
+import React from "react";
 import data from "../data";
 export default function Main() {
+
+let [saveState, setNewImage]= React.useState("");
+
 
 function onButtonClick(){
        const memeArray= data.data.memes;
        const randomMemeIndex=Math.floor(Math.random() * memeArray.length);
        const memeUrl=memeArray[randomMemeIndex].url;
-       console.log(memeUrl);
+       setNewImage(memeUrl);
 }
 
   return (
     <div className="main-form">
       <div className="input-fields">
-        <input placeholder="First text"></input>
-        <input placeholder="Last text"></input>
+        <input id="input1" placeholder="First text"></input>
+        <input id="input2" placeholder="Last text"></input>
       </div>
 
       <button type="button" onClick={onButtonClick}>
         Get a new meme image 🖼
       </button>
 
-      {/* <img className="test" src={memeUrl}/> */}
+      <img className="meme-img" src={saveState}/>
     </div>
   );
 }

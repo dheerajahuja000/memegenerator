@@ -9,11 +9,6 @@ export default function Main() {
 
   let [allMemeImages, memeImage] = React.useState(data);
 
-  const [formData, setFormData] = React.useState({
-    firstName : "",
-    lastName: ""
-  });
-
   function getMemeImage() {
     const memeArray = allMemeImages.data.memes;
     const randomMemeIndex = Math.floor(Math.random() * memeArray.length);
@@ -25,8 +20,12 @@ export default function Main() {
   }
 
   function onHandleChange(oEvent) {
-    debugger;
-    console.log(oEvent.target.value);
+    const {name, value} = oEvent.target
+    setNewImage(prevMeme => ({
+            ...prevMeme,
+            [name]: value
+        }))
+  
   }
 
   return (
@@ -34,17 +33,29 @@ export default function Main() {
       <div className="input-fields">
         <input
           id="input1"
-          placeholder="First text"
+          placeholder="Top Text"
+          name="topText"
+          value={meme.topText}
           onChange={onHandleChange}
         ></input>
-        <input id="input2" placeholder="Last text"></input>
+        <input
+          id="input2"
+          placeholder="Bottom text"
+          name="bottomText"
+          value={meme.bottomText}
+          onChange={onHandleChange}
+        ></input>
       </div>
 
       <button type="button" onClick={getMemeImage}>
         Get a new meme image 🖼
       </button>
 
-      <img className="meme-img" src={meme.randomImage} />
+      <div className="meme">
+                <img src={meme.randomImage} className="meme--image" />
+                <h2 className="meme--text top">{meme.topText}</h2>
+                <h2 className="meme--text bottom">{meme.bottomText}</h2>
+            </div>
     </div>
   );
 }

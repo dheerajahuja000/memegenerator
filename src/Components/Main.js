@@ -1,6 +1,28 @@
 import React from "react";
 import data from "../data";
 export default function Main() {
+  /**
+   * Challenge:
+   * As soon as the Meme component loads the first time,
+   * make an API call to "https://api.imgflip.com/get_memes".
+   *
+   * When the data comes in, save just the memes array part
+   * of that data to the `allMemes` state
+   *
+   * Think about if there are any dependencies that, if they
+   * changed, you'd want to cause to re-run this function.
+   *
+   * Hint: for now, don't try to use an async/await function.
+   * Instead, use `.then()` blocks to resolve the promises
+   * from using `fetch`. We'll learn why after this challenge.
+   */
+
+  React.useEffect(() => {
+    fetch("http://example.com/movies.json")
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  }, []);
+
   let [meme, setNewImage] = React.useState({
     topText: "",
     bottomText: "",
@@ -20,12 +42,11 @@ export default function Main() {
   }
 
   function onHandleChange(oEvent) {
-    const {name, value} = oEvent.target
-    setNewImage(prevMeme => ({
-            ...prevMeme,
-            [name]: value
-        }))
-  
+    const { name, value } = oEvent.target;
+    setNewImage((prevMeme) => ({
+      ...prevMeme,
+      [name]: value,
+    }));
   }
 
   return (
@@ -52,10 +73,10 @@ export default function Main() {
       </button>
 
       <div className="meme">
-                <img src={meme.randomImage} className="meme--image" />
-                <h2 className="meme--text top">{meme.topText}</h2>
-                <h2 className="meme--text bottom">{meme.bottomText}</h2>
-            </div>
+        <img src={meme.randomImage} className="meme--image" />
+        <h2 className="meme--text top">{meme.topText}</h2>
+        <h2 className="meme--text bottom">{meme.bottomText}</h2>
+      </div>
     </div>
   );
 }
